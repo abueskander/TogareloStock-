@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TogareloStock</title>
+    <title>Original brands</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Almarai', sans-serif;
             background-color: #f3f4f7;
             margin: 0;
             padding: 0;
@@ -29,13 +30,14 @@
             gap: 15px;
             position: relative;
             flex-wrap: wrap;
+            align-items: center;
         }
         .menu-icons i {
             font-size: 24px;
             color: #333;
             cursor: pointer;
         }
-        .tooltip, .groups-menu, .actions-menu, .messages-menu {
+        .tooltip, .groups-menu, .actions-menu, .messages-menu, .bag-menu, .intro-menu, .top-bag-menu {
             position: absolute;
             top: 35px;
             background-color: #333;
@@ -49,16 +51,16 @@
             white-space: nowrap;
             z-index: 1000;
         }
-        .tooltip.show, .groups-menu.show, .actions-menu.show, .messages-menu.show {
+        .tooltip.show, .groups-menu.show, .actions-menu.show, .messages-menu.show, .bag-menu.show, .intro-menu.show, .top-bag-menu.show {
             display: flex;
         }
-        .groups-menu .title, .actions-menu .title, .messages-menu .title {
+        .groups-menu .title, .actions-menu .title, .messages-menu .title, .bag-menu .title, .intro-menu .title, .top-bag-menu .title {
             padding: 5px 10px;
             background-color: #0a0;
             border-radius: 5px;
             font-weight: bold;
         }
-        .groups-menu a, .actions-menu a, .messages-menu a {
+        .groups-menu a, .actions-menu a, .messages-menu a, .bag-menu a, .top-bag-menu a {
             padding: 5px 10px;
             border-radius: 5px;
             text-decoration: none;
@@ -66,6 +68,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-weight: bold;
         }
         .facebook { background-color: #3b5998; }
         .whatsapp { background-color: #25D366; }
@@ -80,6 +83,7 @@
             padding: 5px 10px;
             border-radius: 15px;
             border: 1px solid #ccc;
+            font-weight: bold;
         }
         .admin-button {
             background-color: #0a0;
@@ -93,10 +97,12 @@
         .content {
             text-align: center;
             padding: 30px 10px;
+            font-weight: bold;
         }
         .content h1 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 10px;
+            font-weight: bold;
         }
         .contact {
             color: green;
@@ -114,11 +120,36 @@
             text-align: center;
             width: 45%;
             margin-bottom: 20px;
+            font-weight: bold;
         }
         .category i, .shoe-icon, .box-icon {
             font-size: 40px;
             color: #333;
             margin-bottom: 10px;
+        }
+        .bag-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0a0;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .bag-menu-fixed {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            max-width: 250px;
+            font-weight: bold;
         }
         @media (min-width: 600px) {
             .category {
@@ -139,6 +170,15 @@
         <div class="icon-wrapper">
             <i class="fas fa-house" id="homeIcon"></i>
             <div class="tooltip" id="homeTooltip">الرئيسية</div>
+        </div>
+        <div class="icon-wrapper">
+            <i class="fas fa-shopping-bag" id="topBagIcon"></i>
+            <div class="top-bag-menu" id="topBagMenu">
+                <div class="title">الأقسام</div>
+                <a href="#"><i class="fas fa-store"></i> قطاعي</a>
+                <a href="#"><i class="fas fa-boxes"></i> جملة</a>
+                <a href="#"><i class="fas fa-dolly-flatbed"></i> كمية</a>
+            </div>
         </div>
         <div class="icon-wrapper">
             <i class="fas fa-users" id="groupsIcon"></i>
@@ -170,34 +210,48 @@
     </div>
 
     <div class="search">
-        <input type="text" placeholder="ابحث في">
+        <input type="text" placeholder=" ابحث في الموقع">
     </div>
 
     <button class="admin-button" onclick="window.location.href='tel:01021205253'">الأدمن</button>
 </header>
 
 <div class="content">
-    <h1>TogareloStock</h1>
-    <div>تحت الإنشاء بواسطة أبو اسكندر</div>
+    <h1>Original brands</h1>
+    <div>تحت الإنشاء بواسطة محمد أبو اسكندر</div>
     <div class="contact">01021205253</div>
 
     <div class="categories">
         <div class="category">
-            <i class="fas fa-shopping-bag"></i>
-            <div>تجار الشنط</div>
+            <i class="fas fa-shopping-bag" id="mainBagIcon"></i>
+            <div>شنط Original </div>
         </div>
         <div class="category">
             <div class="shoe-icon">👟</div>
-            <div>تجار الأحذية</div>
+            <div>احذيه Original</div>
         </div>
         <div class="category">
-            <i class="fas fa-tshirt"></i>
-            <div>تجار الملابس</div>
+            <i class="fas fa-globe-europe"></i>
+            <div>استوكات Original</div>
         </div>
         <div class="category">
             <i class="fas fa-box"></i>
             <div>تجار البالة</div>
         </div>
+    </div>
+</div>
+
+<!-- زر الشنطة العائم -->
+<button class="bag-button" id="bagFloatingButton">
+    <i class="fas fa-user"></i>
+</button>
+<div class="bag-menu bag-menu-fixed" id="floatingBagMenu">
+    <div class="title">من أنا؟</div>
+    <div style="color: #fff; padding: 10px; display: flex; flex-direction: column; gap: 8px; line-height: 1.6;">
+        <div>أنا محمد أبو اسكندر، تاجر استوكات.</div>
+        <div>هدفي إن سوق الاستوك ينتشر وكل الناس تعرفه وتشتغل فيه.</div>
+        <div>أسعى لتسهيل وصول التاجر للعميل والعكس.</div>
+        <div>نفسي كل الناس تلبس استوك محترم بأسعار مناسبة.</div>
     </div>
 </div>
 
@@ -210,29 +264,37 @@
     const actionsMenu = document.getElementById('actionsMenu');
     const messagesIcon = document.getElementById('messagesIcon');
     const messagesMenu = document.getElementById('messagesMenu');
+    const floatingBagButton = document.getElementById('bagFloatingButton');
+    const floatingBagMenu = document.getElementById('floatingBagMenu');
+    const topBagIcon = document.getElementById('topBagIcon');
+    const topBagMenu = document.getElementById('topBagMenu');
 
     function closeAllMenus() {
         homeTooltip.classList.remove('show');
         groupsMenu.classList.remove('show');
         actionsMenu.classList.remove('show');
         messagesMenu.classList.remove('show');
+        floatingBagMenu.classList.remove('show');
+        topBagMenu.classList.remove('show');
+    }
+
+    function toggleMenu(menu) {
+        closeAllMenus();
+        menu.classList.add('show');
+        setTimeout(() => menu.classList.remove('show'), 1000);
     }
 
     homeIcon.addEventListener('click', () => {
         closeAllMenus();
         homeTooltip.classList.add('show');
-        setTimeout(() => homeTooltip.classList.remove('show'), 1500);
+        setTimeout(() => homeTooltip.classList.remove('show'), 1000);
     });
-
-    function toggleMenu(menu) {
-        closeAllMenus();
-        menu.classList.add('show');
-        setTimeout(() => menu.classList.remove('show'), 2000);
-    }
 
     groupsIcon.addEventListener('click', () => toggleMenu(groupsMenu));
     actionsIcon.addEventListener('click', () => toggleMenu(actionsMenu));
     messagesIcon.addEventListener('click', () => toggleMenu(messagesMenu));
+    floatingBagButton.addEventListener('click', () => toggleMenu(floatingBagMenu));
+    topBagIcon.addEventListener('click', () => toggleMenu(topBagMenu));
 </script>
 
 </body>
