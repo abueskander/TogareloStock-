@@ -161,7 +161,10 @@
                 margin: 0 15px;
             }
         }
-    </style>
+  
+</style>
+    <div id="postsContainer" class="content"></div>
+
 </head>
 <body>
 
@@ -296,6 +299,23 @@
     floatingBagButton.addEventListener('click', () => toggleMenu(floatingBagMenu));
     topBagIcon.addEventListener('click', () => toggleMenu(topBagMenu));
 </script>
+<script>
+    fetch('posts.txt')
+        .then(response => response.text())
+        .then(data => {
+            const posts = data.split('\n');
+            const container = document.getElementById('postsContainer');
+            posts.forEach(post => {
+                if (post.trim() !== '') {
+                    const p = document.createElement('p');
+                    p.textContent = post;
+                    container.appendChild(p);
+                }
+            });
+        })
+        .catch(error => console.error('فشل تحميل المنشورات:', error));
+</script>
 
 </body>
+    
 </html>
