@@ -2,9 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TogareloStock</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f3f4f7;
@@ -13,6 +17,7 @@
         }
         header {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             background-color: #ffffff;
@@ -23,27 +28,14 @@
             display: flex;
             gap: 15px;
             position: relative;
+            flex-wrap: wrap;
         }
         .menu-icons i {
             font-size: 24px;
             color: #333;
             cursor: pointer;
         }
-        .tooltip {
-            position: absolute;
-            top: 35px;
-            background-color: #333;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            display: none;
-            white-space: nowrap;
-        }
-        .tooltip.show {
-            display: block;
-        }
-        .groups-menu, .actions-menu, .messages-menu {
+        .tooltip, .groups-menu, .actions-menu, .messages-menu {
             position: absolute;
             top: 35px;
             background-color: #333;
@@ -55,8 +47,9 @@
             flex-direction: column;
             gap: 5px;
             white-space: nowrap;
+            z-index: 1000;
         }
-        .groups-menu.show, .actions-menu.show, .messages-menu.show {
+        .tooltip.show, .groups-menu.show, .actions-menu.show, .messages-menu.show {
             display: flex;
         }
         .groups-menu .title, .actions-menu .title, .messages-menu .title {
@@ -78,8 +71,9 @@
         .whatsapp { background-color: #25D366; }
         .telegram { background-color: #0088cc; }
         .search {
-            flex: 1;
-            margin: 0 15px;
+            flex: 1 1 100%;
+            margin: 10px 0;
+            order: 3;
         }
         .search input {
             width: 100%;
@@ -112,28 +106,29 @@
         .categories {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 20px;
             margin-top: 20px;
             flex-wrap: wrap;
         }
         .category {
             text-align: center;
-            width: 150px;
+            width: 45%;
+            margin-bottom: 20px;
         }
-        .category i {
+        .category i, .shoe-icon, .box-icon {
             font-size: 40px;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        .shoe-icon {
-            font-size: 50px;
             color: #333;
             margin-bottom: 10px;
         }
-        .box-icon {
-            font-size: 40px;
-            color: #333;
-            margin-bottom: 5px;
+        @media (min-width: 600px) {
+            .category {
+                width: 150px;
+            }
+            .search {
+                order: 0;
+                flex: 1;
+                margin: 0 15px;
+            }
         }
     </style>
 </head>
@@ -183,7 +178,7 @@
 
 <div class="content">
     <h1>TogareloStock</h1>
-    <div>تحت الإنشاء بواسطة أبو اسكندرالموقع </div>
+    <div>تحت الإنشاء بواسطة أبو اسكندر</div>
     <div class="contact">01021205253</div>
 
     <div class="categories">
@@ -224,43 +219,20 @@
     }
 
     homeIcon.addEventListener('click', () => {
-        if (!homeTooltip.classList.contains('show')) {
-            closeAllMenus();
-            homeTooltip.classList.add('show');
-            setTimeout(() => {
-                homeTooltip.classList.remove('show');
-            }, 1500);
-        } else {
-            homeTooltip.classList.remove('show');
-        }
+        closeAllMenus();
+        homeTooltip.classList.add('show');
+        setTimeout(() => homeTooltip.classList.remove('show'), 1500);
     });
 
-    groupsIcon.addEventListener('click', () => {
-        if (!groupsMenu.classList.contains('show')) {
-            closeAllMenus();
-            groupsMenu.classList.add('show');
-        } else {
-            groupsMenu.classList.remove('show');
-        }
-    });
+    function toggleMenu(menu) {
+        closeAllMenus();
+        menu.classList.add('show');
+        setTimeout(() => menu.classList.remove('show'), 2000);
+    }
 
-    actionsIcon.addEventListener('click', () => {
-        if (!actionsMenu.classList.contains('show')) {
-            closeAllMenus();
-            actionsMenu.classList.add('show');
-        } else {
-            actionsMenu.classList.remove('show');
-        }
-    });
-
-    messagesIcon.addEventListener('click', () => {
-        if (!messagesMenu.classList.contains('show')) {
-            closeAllMenus();
-            messagesMenu.classList.add('show');
-        } else {
-            messagesMenu.classList.remove('show');
-        }
-    });
+    groupsIcon.addEventListener('click', () => toggleMenu(groupsMenu));
+    actionsIcon.addEventListener('click', () => toggleMenu(actionsMenu));
+    messagesIcon.addEventListener('click', () => toggleMenu(messagesMenu));
 </script>
 
 </body>
