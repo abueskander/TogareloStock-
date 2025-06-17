@@ -1,114 +1,98 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منشورات التجار</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body {
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background-color: #f5f5f5;
+            padding: 20px;
         }
         header {
-            background-color: #007b5e;
-            color: #fff;
-            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
             text-align: center;
-            font-size: 24px;
-            font-weight: bold;
+            margin-bottom: 30px;
+            color: #444;
         }
-        .post-container {
-            max-width: 800px;
-            margin: 20px auto;
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        input, textarea, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
             padding: 10px;
-        }
-        .post {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .post .title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .post .content {
             font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .post .footer {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #777;
-        }
-        .add-post-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
+        button {
             background-color: #28a745;
             color: #fff;
             border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .post-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            gap: 20px;
         }
-        form {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
+        .post {
             background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
-        form input, form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: 'Cairo', sans-serif;
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
-        form button {
-            background-color: #007b5e;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
+        .content {
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: left;
+            font-size: 14px;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <header>📢 منشورات التجار</header>
 
-    <form action="save_post.php" method="POST">
+    <form action="http://togarelostock.atwebpages.com/Togareloctock/save_post.php" method="POST">
         <input type="text" name="title" placeholder="عنوان المنشور" required>
         <textarea name="content" rows="4" placeholder="محتوى المنشور" required></textarea>
         <input type="text" name="author" placeholder="اسم التاجر" required>
         <button type="submit">نشر المنشور</button>
     </form>
 
-    <div class="post-container" id="posts"></div>
+    <div class="post-container" id="posts">
+        <div>جاري تحميل المنشورات...</div>
+    </div>
 
     <script>
-        fetch('posts.txt')
-            .then(res => res.text())
+        const postsContainer = document.getElementById('posts');
+
+        fetch('http://togarelostock.atwebpages.com/Togareloctock/posts.txt', { mode: 'cors' })
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+                return res.text();
+            })
             .then(data => {
-                const container = document.getElementById('posts');
+                postsContainer.innerHTML = '';
                 const posts = data.trim().split('\n').reverse();
                 posts.forEach(line => {
                     const parts = line.split('|');
@@ -119,15 +103,16 @@
                         div.innerHTML = `
                             <div class="title">${title}</div>
                             <div class="content">${content}</div>
-                            <div class="footer">
-                                <span>بواسطة: ${author}</span>
-                            </div>
+                            <div class="footer">بواسطة: ${author}</div>
                         `;
-                        container.appendChild(div);
+                        postsContainer.appendChild(div);
                     }
                 });
             })
-            .catch(err => console.error('خطأ في تحميل المنشورات', err));
+            .catch(err => {
+                postsContainer.innerHTML = '<div style="color:red;">فشل في تحميل المنشورات. تأكد أن الملف موجود ومفتوح للعرض العام.</div>';
+                console.error('خطأ في تحميل المنشورات:', err);
+            });
     </script>
 </body>
 </html>
