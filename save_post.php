@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $line = "$title|$content|$author\n";
     file_put_contents("posts.txt", $line, FILE_APPEND | LOCK_EX);
+
     header("Location: " . $_SERVER["HTTP_REFERER"]);
     exit();
 }
